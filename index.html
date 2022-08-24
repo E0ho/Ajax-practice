@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>URL hash practice</title>
+    <meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>WEB</h1>
+    <nav id="list">
+
+    </nav>
+    
+    <script>
+      function req_data(para){
+        fetch(para).then(function(response){
+          response.text().then(function(text){
+            var list = text.split(',')
+            var subject ='';
+            for(var i=0; i<list.length; i++){
+              var target = list[i];
+              //console.log(target);   //출력: html css javascript 순서대로 하나씩 출력
+              subject += '<li><a href="#!data/'+target+'" onclick="fetchs(\'data/'+target+'\')">'+ target+ '</a></li>'
+              console.log(subject);
+            }
+            document.querySelector('#list').innerHTML = subject;
+          })
+        })
+      }
+      
+      function fetchs(para){
+        fetch(para).then(function(response){
+          response.text().then(function(text){
+            document.querySelector('article').innerHTML = text;
+          })
+        })
+      }
+
+      if(location.hash){
+        fetchs(location.hash.substr(2));
+      }
+      
+      req_data('data/info');
+    </script>
+    <article>
+
+    </article>
+</html> 
